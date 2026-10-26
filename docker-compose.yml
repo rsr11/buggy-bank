@@ -1,0 +1,14 @@
+   services:
+     db:
+       image: postgres:16
+       container_name: buggybank-db
+       environment:
+         POSTGRES_DB: buggybank
+         POSTGRES_USER: buggy
+         POSTGRES_PASSWORD: buggy
+       ports:
+         - "5433:5432"
+       volumes:
+         - buggybank-data:/var/lib/postgresql/data
+   volumes:
+     buggybank-data:
