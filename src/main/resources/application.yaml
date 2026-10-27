@@ -1,4 +1,4 @@
-   spring:
+   spring:   
      application:
        name: buggy-bank
      datasource:
@@ -9,3 +9,7 @@
        open-in-view: false
        hibernate:
          ddl-auto: validate
+   app:
+     jwt:
+       secret: ${JWT_SECRET:dev-only-secret-change-me-in-production-32b}
+       expiry-minutes: 60

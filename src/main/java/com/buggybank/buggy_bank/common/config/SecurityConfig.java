@@ -7,6 +7,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
@@ -28,15 +30,22 @@ public class SecurityConfig {
                     "/swagger-ui/**",
                     "/swagger-ui.html",
                     "/v3/api-docs/**",
-                    "/api/ping/**"
+                  //  "/api/ping/**",
+                    "/api/auth/**"
                 ).permitAll()
                 // Everything else needs authentication
                 .anyRequest().authenticated()
             )
 
             // Temporary login method; Milestone 3 replaces this with JWT
-            .httpBasic(Customizer.withDefaults());
+            // .httpBasic(Customizer.withDefaults());
+              .oauth2ResourceServer(oauth -> oauth.jwt(Customizer.withDefaults()));
 
         return http.build();
     }
+
+      @Bean
+      PasswordEncoder passwordEncoder() {
+      return new BCryptPasswordEncoder();
+  }
 }
