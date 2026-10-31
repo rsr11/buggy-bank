@@ -1,5 +1,6 @@
 package com.buggybank.buggy_bank.user;
 
+import java.time.ZoneId;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -22,4 +23,11 @@ public class UserService {
         return users.findById(id).map(UserResponse::from)
                 .orElseThrow(() -> new NotFoundException("User not found"));
     }
+
+    @Transactional(readOnly = true)
+public ZoneId zoneOf(UUID userId) {
+    return users.findById(userId)
+            .map(u -> ZoneId.of(u.getTimezone()))
+            .orElseThrow(() -> new NotFoundException("User not found"));
+}
 }
